@@ -21,4 +21,6 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --json | snyk-to-html -o results.html
+        args: --json
+    - run:
+        | snyk-to-html -o results.html
