@@ -10,9 +10,15 @@ jobs:
     
     steps:
     - uses: actions/checkout@master
+    - name: Nodejs
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install snyk-to-html -g
+    
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --json
+        args: --json | snyk-to-html -o results.html
