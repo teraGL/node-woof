@@ -3,25 +3,12 @@ on: push
 jobs:
   security:
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [12.x]
-    
+        
     steps:
-    - uses: actions/checkout@master
-    - name: Nodejs
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install snyk-to-html -g
-    
+    - uses: actions/checkout@master  
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --json
-    - run: |
-        snyk-to-html -o results.html
+
     
